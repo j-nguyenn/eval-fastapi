@@ -1,0 +1,54 @@
+### Base URL
+@baseUrl = http://127.0.0.1:8000
+
+### ----------------------------------------
+### Create Evaluation
+### ----------------------------------------
+POST {{baseUrl}}/evaluations
+Content-Type: application/json
+
+{
+  "name": "Tesco",
+  "status": "completed",
+  "payload": {
+    "id": 1770200927130,
+    "name": "Tesco",
+    "status": "completed",
+    "totalItems": 3,
+    "criteria": [],
+    "data": []
+  }
+}
+
+###
+
+### ----------------------------------------
+### List Evaluations
+### ----------------------------------------
+GET {{baseUrl}}/evaluations
+
+###
+
+### ----------------------------------------
+### Get Evaluation by ID
+### ----------------------------------------
+GET {{baseUrl}}/evaluations/1
+
+###
+
+### ----------------------------------------
+### Update Evaluation
+### ----------------------------------------
+PUT {{baseUrl}}/evaluations/1
+Content-Type: application/json
+
+{
+  "status": "archived"
+}
+
+###
+
+### ----------------------------------------
+### Delete Evaluation
+### ----------------------------------------
+DELETE {{baseUrl}}/evaluations/1
