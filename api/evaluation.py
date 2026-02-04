@@ -24,10 +24,19 @@ def create_evaluation(
     db: Session = Depends(get_db)
 ):
     obj = Evaluation(
-        name=evaluation.name,
-        status=evaluation.status,
-        payload=evaluation.payload
+      id=evaluation.id,
+      name=evaluation.name,
+      instructions=evaluation.instructions,
+      criteria=evaluation.criteria,
+      column_roles=evaluation.columnRoles,
+      data=evaluation.data,
+      context=evaluation.context,
+      total_items=evaluation.totalItems,
+      randomization_enabled=evaluation.randomizationEnabled,
+      status=evaluation.status,
+      group_by=evaluation.groupBy
     )
+
     db.add(obj)
     db.commit()
     db.refresh(obj)

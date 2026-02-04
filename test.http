@@ -8,18 +8,403 @@ POST {{baseUrl}}/evaluations
 Content-Type: application/json
 
 {
-  "name": "Tesco",
-  "status": "completed",
-  "payload": {
     "id": 1770200927130,
     "name": "Tesco",
+    "instructions": "Please evaluate each item carefully. Focus on link functionality, content relevance, and appropriateness.",
+    "criteria": [
+        {
+            "name": "How useful is the system's explanation of the causal drivers behind this material change?",
+            "type": "likert-scale",
+            "options": [
+                "1",
+                "2",
+                "3",
+                "4",
+                "5"
+            ],
+            "reasoning": "How useful is the system's explanation of the causal drivers behind this material change?",
+            "confidence": 85,
+            "required": true,
+            "likertLabels": {
+                "low": "Poor",
+                "high": "Excellent"
+            },
+            "id": 1,
+            "aiGenerated": false
+        },
+        {
+            "name": "For this material change, has the system identified all important causal drivers that are present in the source documents?",
+            "type": "likert-scale",
+            "options": [
+                "1",
+                "2",
+                "3",
+                "4",
+                "5"
+            ],
+            "reasoning": "For this material change, has the system identified all important causal drivers that are present in the source documents?",
+            "confidence": 85,
+            "required": true,
+            "likertLabels": {
+                "low": "Poor",
+                "high": "Excellent"
+            },
+            "id": 2,
+            "aiGenerated": false
+        },
+        {
+            "name": "For this material change, has the system included only causal drivers that are supported by the source documents and are genuinely causal (not speculative or irrelevant)?",
+            "type": "likert-scale",
+            "options": [
+                "1",
+                "2",
+                "3",
+                "4",
+                "5"
+            ],
+            "reasoning": "For this material change, has the system included only causal drivers that are supported by the source documents and are genuinely causal (not speculative or irrelevant)?",
+            "confidence": 85,
+            "required": true,
+            "likertLabels": {
+                "low": "Poor",
+                "high": "Excellent"
+            },
+            "id": 3,
+            "aiGenerated": false
+        },
+        {
+            "name": "Please describe any important causal drivers that are missing, incorrect, or not supported by the source documents.",
+            "type": "text-input",
+            "reasoning": "Please describe any important causal drivers that are missing, incorrect, or not supported by the source documents.",
+            "confidence": 85,
+            "required": false,
+            "id": 4,
+            "aiGenerated": false
+        }
+    ],
+    "column_roles": [
+        {
+            "id": "name",
+            "name": "name",
+            "suggestedRole": "Input Data",
+            "confidence": 85,
+            "reason": "Column \"name\" suggests input data based on name and sample analysis",
+            "reasoning": "Column \"name\" suggests input data based on name and sample analysis",
+            "userRole": "Group By",
+            "labelVisible": true
+        },
+        {
+            "id": "latest_yoy_pct_ground_truth",
+            "name": "latest_yoy_pct_ground_truth",
+            "suggestedRole": "Excluded",
+            "confidence": 100,
+            "reason": "Column \"latest_yoy_pct_ground_truth\" excluded from role assignment due to fuzzy match with 'ground_truth'",
+            "reasoning": "Column \"latest_yoy_pct_ground_truth\" excluded from role assignment due to fuzzy match with 'ground_truth'",
+            "userRole": "Excluded",
+            "labelVisible": true
+        },
+        {
+            "id": "reason_ground_truth",
+            "name": "reason_ground_truth",
+            "suggestedRole": "Excluded",
+            "confidence": 100,
+            "reason": "Column \"reason_ground_truth\" excluded from role assignment due to fuzzy match with 'ground_truth'",
+            "reasoning": "Column \"reason_ground_truth\" excluded from role assignment due to fuzzy match with 'ground_truth'",
+            "userRole": "Excluded",
+            "labelVisible": true
+        },
+        {
+            "id": "supporting_text_ground_truth",
+            "name": "supporting_text_ground_truth",
+            "suggestedRole": "Excluded",
+            "confidence": 100,
+            "reason": "Column \"supporting_text_ground_truth\" excluded from role assignment due to fuzzy match with 'ground_truth'",
+            "reasoning": "Column \"supporting_text_ground_truth\" excluded from role assignment due to fuzzy match with 'ground_truth'",
+            "userRole": "Excluded",
+            "labelVisible": true
+        },
+        {
+            "id": "reference_file_name",
+            "name": "reference_file_name",
+            "suggestedRole": "Metadata",
+            "confidence": 85,
+            "reason": "Column \"reference_file_name\" detected as ID/reference based on name and unique values",
+            "reasoning": "Column \"reference_file_name\" detected as ID/reference based on name and unique values",
+            "userRole": "Metadata",
+            "labelVisible": true
+        },
+        {
+            "id": "reference_page_number",
+            "name": "reference_page_number",
+            "suggestedRole": "Metadata",
+            "confidence": 85,
+            "reason": "Column \"reference_page_number\" detected as ID/reference based on name and unique values",
+            "reasoning": "Column \"reference_page_number\" detected as ID/reference based on name and unique values",
+            "userRole": "Metadata",
+            "labelVisible": true
+        },
+        {
+            "id": "eval_sample_id",
+            "name": "eval_sample_id",
+            "suggestedRole": "Metadata",
+            "confidence": 85,
+            "reason": "Column \"eval_sample_id\" detected as ID/reference based on name and unique values",
+            "reasoning": "Column \"eval_sample_id\" detected as ID/reference based on name and unique values",
+            "userRole": "Metadata",
+            "labelVisible": true
+        },
+        {
+            "id": "ground_truth_reason_id",
+            "name": "ground_truth_reason_id",
+            "suggestedRole": "Excluded",
+            "confidence": 100,
+            "reason": "Column \"ground_truth_reason_id\" excluded from role assignment due to fuzzy match with 'ground_truth'",
+            "reasoning": "Column \"ground_truth_reason_id\" excluded from role assignment due to fuzzy match with 'ground_truth'",
+            "userRole": "Excluded",
+            "labelVisible": true
+        },
+        {
+            "id": "agent_reason_id",
+            "name": "agent_reason_id",
+            "suggestedRole": "Metadata",
+            "confidence": 85,
+            "reason": "Column \"agent_reason_id\" detected as ID/reference based on name and unique values",
+            "reasoning": "Column \"agent_reason_id\" detected as ID/reference based on name and unique values",
+            "userRole": "Metadata",
+            "labelVisible": true
+        },
+        {
+            "id": "confidence_score",
+            "name": "confidence_score",
+            "suggestedRole": "Segment",
+            "confidence": 70,
+            "reason": "Column \"confidence_score\" contains a small set of unique categorical values (likely a group/segment)",
+            "reasoning": "Column \"confidence_score\" contains a small set of unique categorical values (likely a group/segment)",
+            "userRole": "Segment",
+            "labelVisible": true
+        },
+        {
+            "id": "explanation",
+            "name": "explanation",
+            "suggestedRole": "Model Output",
+            "confidence": 85,
+            "reason": "Column \"explanation\" suggests model output/content based on name and sample analysis",
+            "reasoning": "Column \"explanation\" suggests model output/content based on name and sample analysis",
+            "userRole": "Model Output",
+            "labelVisible": true
+        },
+        {
+            "id": "latest_yoy_pct_agent_response",
+            "name": "latest_yoy_pct_agent_response",
+            "suggestedRole": "Model Output",
+            "confidence": 85,
+            "reason": "Column \"latest_yoy_pct_agent_response\" suggests model output/content based on name and sample analysis",
+            "reasoning": "Column \"latest_yoy_pct_agent_response\" suggests model output/content based on name and sample analysis",
+            "userRole": "Model Output",
+            "labelVisible": true
+        },
+        {
+            "id": "reason_agent_response",
+            "name": "reason_agent_response",
+            "suggestedRole": "Model Output",
+            "confidence": 85,
+            "reason": "Column \"reason_agent_response\" suggests model output/content based on name and sample analysis",
+            "reasoning": "Column \"reason_agent_response\" suggests model output/content based on name and sample analysis",
+            "userRole": "Model Output",
+            "labelVisible": true
+        },
+        {
+            "id": "supporting_text_agent_response",
+            "name": "supporting_text_agent_response",
+            "suggestedRole": "Model Output",
+            "confidence": 85,
+            "reason": "Column \"supporting_text_agent_response\" suggests model output/content based on name and sample analysis",
+            "reasoning": "Column \"supporting_text_agent_response\" suggests model output/content based on name and sample analysis",
+            "userRole": "Model Output",
+            "labelVisible": true
+        },
+        {
+            "id": "reference",
+            "name": "reference",
+            "suggestedRole": "Metadata",
+            "confidence": 85,
+            "reason": "Column \"reference\" detected as ID/reference based on name and unique values",
+            "reasoning": "Column \"reference\" detected as ID/reference based on name and unique values",
+            "userRole": "Metadata",
+            "labelVisible": true
+        },
+        {
+            "id": "company_name",
+            "name": "company_name",
+            "suggestedRole": "Input Data",
+            "confidence": 85,
+            "reason": "Column \"company_name\" suggests input data based on name and sample analysis",
+            "reasoning": "Column \"company_name\" suggests input data based on name and sample analysis",
+            "userRole": "Common",
+            "labelVisible": true
+        },
+        {
+            "id": "sources",
+            "name": "sources",
+            "suggestedRole": "Input Data",
+            "confidence": 85,
+            "reason": "Column \"sources\" suggests input data based on name and sample analysis",
+            "reasoning": "Column \"sources\" suggests input data based on name and sample analysis",
+            "userRole": "Common",
+            "labelVisible": true
+        }
+    ],
+    "data": [
+        {
+            "name": "Capital Expenditure",
+            "latest_yoy_pct_ground_truth": "10",
+            "reason_ground_truth": "Lower net interest costs on medium-term notes as a result of net refinancing activities and favourable non-cash mark-to-market movements on certain derivative financial instruments.",
+            "supporting_text_ground_truth": "Capital Expenditure (including adjusting items) were £46m lower year-on-year, mainly due to lower net interest costs on medium-term notes as a result of net refinancing activities, and favourable non-cash mark-to-market movements on certain derivative financial instruments.",
+            "reference_file_name": "Tesco AR report extracted",
+            "reference_page_number": "24",
+            "eval_sample_id": "1",
+            "ground_truth_reason_id": "0",
+            "agent_reason_id": "0",
+            "confidence_score": "1",
+            "explanation": "aaa",
+            "latest_yoy_pct_agent_response": "5",
+            "reason_agent_response": "Lower net interest costs and favourable financial movements.",
+            "supporting_text_agent_response": "Capital expenditure was lower year-on-year due to refinancing activities and favourable non-cash mark-to-market movements on derivatives.",
+            "reference": "Tesco AR report extracted",
+            "company_name": "Tesco",
+            "sources": "https://www.tescoplc.com/investors/reports-results-and-presentations/annual-report-2025"
+        },
+        {
+            "name": "Capital Expenditure",
+            "latest_yoy_pct_ground_truth": "10",
+            "reason_ground_truth": "Increased wages and staff benefits.",
+            "supporting_text_ground_truth": "Labour shortages and inflationary pressures often lead supermarkets to raise wages to attract and retain employees. Additionally, enhanced benefits such as healthcare or bonuses can further increase personnel costs",
+            "reference_file_name": "Tesco AR report extracted",
+            "reference_page_number": "23",
+            "eval_sample_id": "1",
+            "ground_truth_reason_id": "1",
+            "agent_reason_id": "",
+            "confidence_score": "",
+            "explanation": "",
+            "latest_yoy_pct_agent_response": "",
+            "reason_agent_response": "Increased wages and staff benefits.",
+            "supporting_text_agent_response": "Labour shortages and inflationary pressures led to higher wages and enhanced employee benefits.",
+            "reference": "Tesco AR report extracted",
+            "company_name": "Tesco",
+            "sources": "https://www.tescoplc.com/investors/reports-results-and-presentations/annual-report-2026"
+        },
+        {
+            "name": "Capital Expenditure",
+            "latest_yoy_pct_ground_truth": "10",
+            "reason_ground_truth": "Spending on digital systems and eco-friendly initiatives.",
+            "supporting_text_ground_truth": "To remain competitive, supermarkets are investing in technology such as mobile apps, inventory management systems, and self-checkout solutions. These upgrades improve efficiency and customer experience but require substantial upfront and ongoing costs. Similarly, sustainability initiatives�like energy-efficient refrigeration or waste reduction programmes�are increasingly prioritised, adding to capital and operational expenses.",
+            "reference_file_name": "Retail Industry report",
+            "reference_page_number": "10",
+            "eval_sample_id": "1",
+            "ground_truth_reason_id": "2",
+            "agent_reason_id": "",
+            "confidence_score": "",
+            "explanation": "",
+            "latest_yoy_pct_agent_response": "",
+            "reason_agent_response": "Investment in digital systems and sustainability initiatives.",
+            "supporting_text_agent_response": "Spending increased on technology upgrades and eco-friendly initiatives to improve efficiency and sustainability.",
+            "reference": "Retail Industry report",
+            "company_name": "Tesco",
+            "sources": "https://www.tescoplc.com/investors/reports-results-and-presentations/annual-report-2027"
+        },
+        {
+            "name": "Net Profit",
+            "latest_yoy_pct_ground_truth": "3",
+            "reason_ground_truth": "Decline in fuel sales, mainly driven by lower retail prices year-on-year.",
+            "supporting_text_ground_truth": "Revenue increased by 3.0% at constant rates, including a (6.3)% decline in fuel sales, mainly driven by lower retail prices year-on-year.",
+            "reference_file_name": "Tesco AR report extracted",
+            "reference_page_number": "10",
+            "eval_sample_id": "1",
+            "ground_truth_reason_id": "1",
+            "agent_reason_id": "0",
+            "confidence_score": "1",
+            "explanation": "ddd",
+            "latest_yoy_pct_agent_response": "3",
+            "reason_agent_response": "Decline in fuel sales.",
+            "supporting_text_agent_response": "Fuel sales declined mainly due to lower retail prices year-on-year.",
+            "reference": "Tesco AR report extracted",
+            "company_name": "Tesco",
+            "sources": "https://www.tescoplc.com/investors/reports-results-and-presentations/annual-report-2028"
+        },
+        {
+            "name": "Net Profit",
+            "latest_yoy_pct_ground_truth": "3",
+            "reason_ground_truth": "Higher volumes and improved category mix, supported by continued investments in value, quality and service.",
+            "supporting_text_ground_truth": "Sales1 increased by 4.0% at constant rates, including a strong contribution from higher volumes and improved category mix, supported by our continued investments in value, quality and service.",
+            "reference_file_name": "Tesco AR report extracted",
+            "reference_page_number": "24",
+            "eval_sample_id": "1",
+            "ground_truth_reason_id": "",
+            "agent_reason_id": "1",
+            "confidence_score": "",
+            "explanation": "",
+            "latest_yoy_pct_agent_response": "3",
+            "reason_agent_response": "Decline in fuel sales.",
+            "supporting_text_agent_response": "Fuel sales declined mainly due to lower retail prices year-on-year.",
+            "reference": "Tesco AR report extracted",
+            "company_name": "Tesco",
+            "sources": "https://www.tescoplc.com/investors/reports-results-and-presentations/annual-report-2029"
+        },
+        {
+            "name": "Operating Profit",
+            "latest_yoy_pct_ground_truth": "-5",
+            "reason_ground_truth": "New product launch did not create tangible values",
+            "supporting_text_ground_truth": "The launch of a new product X last year has made a dent in the company's financials, fell short of expectations",
+            "reference_file_name": "Tesco earning calls",
+            "reference_page_number": "10",
+            "eval_sample_id": "1",
+            "ground_truth_reason_id": "0",
+            "agent_reason_id": "0",
+            "confidence_score": "0.5",
+            "explanation": "fff",
+            "latest_yoy_pct_agent_response": "-2",
+            "reason_agent_response": "New product launch failed to meet expectations.",
+            "supporting_text_agent_response": "The launch of a new product did not generate the anticipated value and negatively impacted financial performance.",
+            "reference": "Tesco earning calls",
+            "company_name": "Tesco",
+            "sources": "https://www.tescoplc.com/investors/reports-results-and-presentations/annual-report-2030"
+        },
+        {
+            "name": "Net Profit",
+            "latest_yoy_pct_ground_truth": "3",
+            "reason_ground_truth": "Improved sales volumes and stronger category mix.",
+            "supporting_text_ground_truth": "Sales increased due to higher volumes and an improved category mix, supported by continued investments in value, quality and service.",
+            "reference_file_name": "Tesco AR report extracted",
+            "reference_page_number": "24",
+            "eval_sample_id": "2",
+            "ground_truth_reason_id": "0",
+            "agent_reason_id": "",
+            "confidence_score": "",
+            "explanation": "",
+            "latest_yoy_pct_agent_response": "",
+            "reason_agent_response": "Improved sales volumes and stronger category mix.",
+            "supporting_text_agent_response": "Sales increased due to higher volumes and an improved category mix, supported by continued investments in value, quality and service.",
+            "reference": "Tesco AR report extracted",
+            "company_name": "Tesco",
+            "sources": "https://www.tescoplc.com/investors/reports-results-and-presentations/annual-report-2031"
+        }
+    ],
+    "total_items": 3,
+    "randomization_enabled": false,
     "status": "completed",
-    "totalItems": 3,
-    "criteria": [],
-    "data": []
-  }
+    "group_by": "name",
+    "context": [
+        {
+            "company_name": "Tesco"
+        },
+        {
+            "sources": "https://www.tescoplc.com/investors/reports-results-and-presentations/annual-report-2025"
+        },
+        {
+            "name": "Capital Expenditure"
+        }
+    ]
 }
-
 ###
 
 ### ----------------------------------------

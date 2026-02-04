@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime, JSON
+from sqlalchemy import Boolean, Column, Integer, String, DateTime, JSON
 from datetime import datetime
 from db import Base
 
@@ -7,12 +7,28 @@ class Evaluation(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True)
-    status = Column(String)
-    payload = Column(JSON, nullable=False)
+    instructions = Column(String)
 
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(
+    criteria = Column(JSON, nullable=False)
+    column_roles = Column("columnRoles", JSON, nullable=False)
+    data = Column(JSON, nullable=False)
+    context = Column(JSON)
+
+    total_items = Column("totalItems", Integer)
+    randomization_enabled = Column("randomizationEnabled", Boolean)
+
+    status = Column(String, index=True)
+    group_by = Column("groupBy", String)
+
+    created_at = Column(
+        "createdAt",
         DateTime,
-        default=datetime.utcnow,
-        onupdate=datetime.utcnow
+        nullable=False,
+        default=datetime.utcnow
+    )
+
+    completed_at = Column(
+        "completedAt",
+        DateTime,
+        nullable=True
     )
