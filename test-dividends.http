@@ -1,0 +1,54 @@
+### Base URL
+@baseUrl = http://127.0.0.1:8000
+
+### ----------------------------------------
+### Get Dividend History for a single ticker
+### ----------------------------------------
+GET {{baseUrl}}/dividends/AAPL
+
+### ----------------------------------------
+### Get Dividend History with date filters
+### ----------------------------------------
+GET {{baseUrl}}/dividends/MSFT?start_date=2024-01-01&end_date=2025-12-31
+
+### ----------------------------------------
+### Bulk Dividend History
+### ----------------------------------------
+POST {{baseUrl}}/dividends/bulk
+Content-Type: application/json
+
+{
+    "tickers": ["AAPL", "MSFT", "GOOGL"]
+}
+
+### ----------------------------------------
+### Bulk Dividend History with date filters
+### ----------------------------------------
+POST {{baseUrl}}/dividends/bulk
+Content-Type: application/json
+
+{
+    "tickers": ["AAPL", "MSFT", "GOOGL", "JNJ", "KO"],
+    "start_date": "2024-01-01",
+    "end_date": "2025-12-31"
+}
+
+### ----------------------------------------
+### Bulk Dividend History - single ticker
+### ----------------------------------------
+POST {{baseUrl}}/dividends/bulk
+Content-Type: application/json
+
+{
+    "tickers": ["TSLA"]
+}
+
+### ----------------------------------------
+### Bulk Dividend History - with invalid ticker
+### ----------------------------------------
+POST {{baseUrl}}/dividends/bulk
+Content-Type: application/json
+
+{
+    "tickers": ["AAPL", "INVALIDTICKER123", "MSFT"]
+}

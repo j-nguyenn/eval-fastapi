@@ -4,9 +4,60 @@ import pandas as pd
 import yfinance as yf
 from fastapi import APIRouter, HTTPException, Query
 
-from schemas.dividends import DividendHistoryResponse, DividendRecord
+from schemas.dividends import (
+    BulkDividendHistoryResponse,
+    BulkDividendRequest,
+    DividendHistoryResponse,
+    DividendRecord,
+)
 
 router = APIRouter(prefix="/dividends", tags=["Dividends"])
+
+
+@router.post("/bulk", response_model=BulkDividendHistoryResponse)
+def get_bulk_dividend_history(request: BulkDividendRequest):
+    """Return dividend history for a list of tickers."""
+    results: list[DividendHistoryResponse] = []
+    errors: list[dict] = []
+
+    for ticker in request.tickers:
+        try:
+            stock = yf.Ticker(ticker)
+            currency = stock.info.get("currency", "USD")
+            dividends = stock.dividends
+
+            if dividends.empty:
+                results.append(DividendHistoryResponse(ticker=ticker, currency=currency, dividends=[]))
+                continue
+
+            df = dividends.reset_index()
+            df.columns = ["Payment Date", "Dividend"]
+            df["Payment Date"] = pd.to_datetime(df["Payment Date"]).dt.tz_localize(None)
+            df["Dividend"] = pd.to_numeric(df["Dividend"], errors="coerce")
+
+            if request.start_date:
+                df = df[df["Payment Date"] >= pd.Timestamp(request.start_date)]
+            if request.end_date:
+                df = df[df["Payment Date"] <= pd.Timestamp(request.end_date)]
+
+            df = df.sort_values("Payment Date", ascending=False)
+
+            records = [
+                DividendRecord(
+                    payment_date=row["Payment Date"].strftime("%Y-%m-%d"),
+                    ticker=ticker,
+                    currency=currency,
+                    dividend=round(row["Dividend"], 6),
+                )
+                for _, row in df.iterrows()
+            ]
+
+            results.append(DividendHistoryResponse(ticker=ticker, currency=currency, dividends=records))
+
+        except Exception as e:
+            errors.append({"ticker": ticker, "detail": str(e)})
+
+    return BulkDividendHistoryResponse(results=results, errors=errors)
 
 
 @router.get("/{ticker}", response_model=DividendHistoryResponse)
