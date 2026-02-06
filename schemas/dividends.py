@@ -8,6 +8,8 @@ class DividendRecord(BaseModel):
     ticker: str
     currency: str
     dividend: float
+    price_per_share: Optional[float] = None
+    dividend_yield: Optional[float] = None
 
 
 class DividendHistoryResponse(BaseModel):

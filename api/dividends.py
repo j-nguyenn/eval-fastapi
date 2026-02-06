@@ -42,15 +42,37 @@ def get_bulk_dividend_history(request: BulkDividendRequest):
 
             df = df.sort_values("Payment Date", ascending=False)
 
-            records = [
-                DividendRecord(
-                    payment_date=row["Payment Date"].strftime("%Y-%m-%d"),
-                    ticker=ticker,
-                    currency=currency,
-                    dividend=round(row["Dividend"], 6),
+            # Fetch historical closing prices to match each dividend date
+            hist_start = df["Payment Date"].min()
+            hist_end = df["Payment Date"].max() + pd.Timedelta(days=1)
+            history = stock.history(start=hist_start, end=hist_end)
+            if not history.empty:
+                history.index = pd.to_datetime(history.index).tz_localize(None)
+
+            records = []
+            for _, row in df.iterrows():
+                pay_date = row["Payment Date"]
+                dividend = round(row["Dividend"], 6)
+                price = None
+                div_yield = None
+
+                if not history.empty:
+                    mask = history.index <= pay_date
+                    if mask.any():
+                        price = round(float(history.loc[mask, "Close"].iloc[-1]), 4)
+                        if price > 0:
+                            div_yield = round((dividend / price) * 100, 4)
+
+                records.append(
+                    DividendRecord(
+                        payment_date=pay_date.strftime("%Y-%m-%d"),
+                        ticker=ticker,
+                        currency=currency,
+                        dividend=dividend,
+                        price_per_share=price,
+                        dividend_yield=div_yield,
+                    )
                 )
-                for _, row in df.iterrows()
-            ]
 
             results.append(DividendHistoryResponse(ticker=ticker, currency=currency, dividends=records))
 
@@ -88,15 +110,38 @@ def get_dividend_history(
 
         df = df.sort_values("Payment Date", ascending=False)
 
-        records = [
-            DividendRecord(
-                payment_date=row["Payment Date"].strftime("%Y-%m-%d"),
-                ticker=ticker,
-                currency=currency,
-                dividend=round(row["Dividend"], 6),
+        # Fetch historical closing prices to match each dividend date
+        hist_start = df["Payment Date"].min()
+        hist_end = df["Payment Date"].max() + pd.Timedelta(days=1)
+        history = stock.history(start=hist_start, end=hist_end)
+        if not history.empty:
+            history.index = pd.to_datetime(history.index).tz_localize(None)
+
+        records = []
+        for _, row in df.iterrows():
+            pay_date = row["Payment Date"]
+            dividend = round(row["Dividend"], 6)
+            price = None
+            div_yield = None
+
+            if not history.empty:
+                # Find the closest trading day on or before the payment date
+                mask = history.index <= pay_date
+                if mask.any():
+                    price = round(float(history.loc[mask, "Close"].iloc[-1]), 4)
+                    if price > 0:
+                        div_yield = round((dividend / price) * 100, 4)
+
+            records.append(
+                DividendRecord(
+                    payment_date=pay_date.strftime("%Y-%m-%d"),
+                    ticker=ticker,
+                    currency=currency,
+                    dividend=dividend,
+                    price_per_share=price,
+                    dividend_yield=div_yield,
+                )
             )
-            for _, row in df.iterrows()
-        ]
 
         return DividendHistoryResponse(
             ticker=ticker,
