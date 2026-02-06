@@ -437,3 +437,79 @@ Content-Type: application/json
 ### Delete Evaluation
 ### ----------------------------------------
 DELETE {{baseUrl}}/evaluations/1
+
+###
+
+### ----------------------------------------
+### Create Result
+### ----------------------------------------
+POST {{baseUrl}}/results
+Content-Type: application/json
+
+{
+    "evaluationId": 1770200927130,
+    "evaluationName": "Tesco",
+    "itemId": "Capital Expenditure",
+    "reviewerId": "1770200933112",
+    "reviewerName": "Jasmine",
+    "submittedAt": "2026-02-04T10:50:45.385Z",
+    "timeSpent": 4,
+    "responses": {
+        "How useful is the system's explanation of the causal drivers behind this material change?": "4",
+        "For this material change, has the system identified all important causal drivers that are present in the source documents?": "3",
+        "For this material change, has the system included only causal drivers that are supported by the source documents and are genuinely causal (not speculative or irrelevant)?": "4"
+    },
+    "originalData": {
+        "name": "Capital Expenditure",
+        "latest_yoy_pct_ground_truth": "10",
+        "reason_ground_truth": "Lower net interest costs on medium-term notes as a result of net refinancing activities and favourable non-cash mark-to-market movements on certain derivative financial instruments.",
+        "supporting_text_ground_truth": "Capital Expenditure (including adjusting items) were £46m lower year-on-year, mainly due to lower net interest costs on medium-term notes as a result of net refinancing activities, and favourable non-cash mark-to-market movements on certain derivative financial instruments.",
+        "reference_file_name": "Tesco AR report extracted",
+        "reference_page_number": "24",
+        "eval_sample_id": "1",
+        "ground_truth_reason_id": "0",
+        "agent_reason_id": "0",
+        "confidence_score": "1",
+        "explanation": "aaa",
+        "latest_yoy_pct_agent_response": "5",
+        "reason_agent_response": "Lower net interest costs and favourable financial movements.",
+        "supporting_text_agent_response": "Capital expenditure was lower year-on-year due to refinancing activities and favourable non-cash mark-to-market movements on derivatives.",
+        "reference": "Tesco AR report extracted",
+        "company_name": "Tesco",
+        "sources": "https://www.tescoplc.com/investors/reports-results-and-presentations/annual-report-2025"
+    }
+}
+
+###
+
+### ----------------------------------------
+### List Results
+### ----------------------------------------
+GET {{baseUrl}}/results
+
+###
+
+### ----------------------------------------
+### Get Result by ID
+### ----------------------------------------
+GET {{baseUrl}}/results/1
+
+###
+
+### ----------------------------------------
+### Update Result
+### ----------------------------------------
+PUT {{baseUrl}}/results/1
+Content-Type: application/json
+
+{
+    "timeSpent": 10,
+    "reviewerName": "Jasmine N."
+}
+
+###
+
+### ----------------------------------------
+### Delete Result
+### ----------------------------------------
+DELETE {{baseUrl}}/results/1
